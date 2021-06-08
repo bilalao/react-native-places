@@ -9,8 +9,8 @@ const NewPlaceScreen = props =>{
 
     const titleChangeHandler = text => {
       // you could add validation
-      
       setTitleValue(text);
+
     };
 
     const savePlaceHandler = () => {
