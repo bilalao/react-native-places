@@ -1,12 +1,18 @@
 import React from 'react';
-import { SafeAreaView, Text, StyleSheet, Platform, ImageBackground } from 'react-native';
+import { SafeAreaView, Text, StyleSheet, Platform, FlatList,  ImageBackground } from 'react-native';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
-
+import { useSelector} from 'react-redux';
 import HeaderButton from '../components/HeaderButton';
-
+import PlaceItem from '../components/PlaceItem';
 const PlacesListScreen = props =>{
+    const places = useSelector(state => state.places.places);
+
     return (
+        
     <SafeAreaView style={styles.container1} >
+        <FlatList data= {places} 
+        KeyExtractor={item => item.id} 
+        renderItem = {itemData => <PlaceItem image={null} title={itemData.item.title} />} />
         <Text>PlacesListScreen</Text>
         <ImageBackground  source={require("../assets/CoolGradient3.png")}
        style={styles.imagebg}>
