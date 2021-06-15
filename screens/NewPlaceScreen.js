@@ -40,12 +40,17 @@ const NewPlaceScreen = (props) => {
           source={require("../assets/CoolGradient3.png")}
           style={styles.imagebg}
         ></ImageBackground>
+        <Text style={styles.label}>NOM</Text>
         <TextInput
           style={styles.textInput}
           onChangeText={titleChangeHandler}
           value={titleValue}
         />
+        <Text style={styles.label}>ADDRESS</Text>
+        <TextInput style={styles.textInput}></TextInput>
+        <Text style={styles.label}>PHOTO</Text>
         <ImagePicker onImageTaken={imageTakenHandler} />
+        <Text style={styles.label}>LOCATION</Text>
         <LocationPicker />
 
         <Button
@@ -79,6 +84,7 @@ const styles = StyleSheet.create({
   },
   textInput: {
     borderBottomColor: "#ccc",
+    borderWidth: 1,
     borderBottomWidth: 1,
     marginBottom: 15,
     paddingVertical: 4,

@@ -18,7 +18,7 @@ const LocationPicker = (props) => {
   const [pickedLocation, setPickedLocation] = useState();
 
   const verifyPermissions = async () => {
-    const result = await Permissions.askAsync(Permissions.LOCATION_BACKGROUND);
+    const result = await Permissions.askAsync(Permissions.LOCATION_FOREGROUND);
     //const { status, permissions } = await Permissions.askAsync(Permissions.LOCATION);
 
     if (result.status !== "granted") {

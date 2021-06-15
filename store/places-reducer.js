@@ -13,6 +13,7 @@ export default (state = initialState, action) => {
           (pl) => new Place(pl.id.toString(), pl.title, pl.imageUri)
         ),
       };
+
     case ADD_PLACE:
       const newPlace = new Place(
         action.placeData.toString(),
