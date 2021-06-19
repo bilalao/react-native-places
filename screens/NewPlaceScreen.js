@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import {
   ScrollView,
   SafeAreaView,
@@ -16,10 +16,12 @@ import LocationPicker from "../components/LocationPicker";
 
 const NewPlaceScreen = (props) => {
   const dispatch = useDispatch();
+
   const [selectedImage, setSelectedImage] = useState();
 
   const [titleValue, setTitleValue] = useState("");
 
+  const [selectedLocation, setSelectedLocation] = useState();
   const titleChangeHandler = (text) => {
     // you could add validation
     setTitleValue(text);
@@ -28,8 +30,13 @@ const NewPlaceScreen = (props) => {
   const imageTakenHandler = (imagePath) => {
     setSelectedImage(imagePath);
   };
+  const locationPickedHandler = useCallback((location) => {
+    setSelectedLocation(location);
+  }, []);
   const savePlaceHandler = () => {
-    dispatch(placesActions.addPlace(titleValue, selectedImage));
+    dispatch(
+      placesActions.addPlace(titleValue, selectedImage, selectedLocation)
+    );
     props.navigation.goBack();
   };
   return (
@@ -51,7 +58,11 @@ const NewPlaceScreen = (props) => {
         <Text style={styles.label}>PHOTO</Text>
         <ImagePicker onImageTaken={imageTakenHandler} />
         <Text style={styles.label}>LOCATION</Text>
-        <LocationPicker />
+
+        <LocationPicker
+          navigation={props.navigation}
+          onLocationPicked={locationPickedHandler}
+        />
 
         <Button
           title="Save Place"
