@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Button,
@@ -20,6 +20,7 @@ const LocationPicker = (props) => {
   const mapPickedLocation = props.navigation.getParam("pickedLocation");
 
   const { onLocationPicked } = props;
+
   useEffect(() => {
     if (mapPickedLocation) {
       setPickedLocation(mapPickedLocation);
@@ -28,9 +29,7 @@ const LocationPicker = (props) => {
   }, [mapPickedLocation, onLocationPicked]);
 
   const verifyPermissions = async () => {
-    const result = await Permissions.askAsync(Permissions.LOCATION_FOREGROUND);
-    //const { status, permissions } = await Permissions.askAsync(Permissions.LOCATION);
-
+    const result = await Permissions.askAsync(Permissions.LOCATION);
     if (result.status !== "granted") {
       Alert.alert(
         "Insufficient permissions!",
@@ -38,25 +37,10 @@ const LocationPicker = (props) => {
         [{ text: "Okay" }]
       );
       return false;
-      console.log("not allowed");
     }
     return true;
-    console.log("not allowed");
   };
 
-  /*
-  async function verifyPermissions() {
-    // permissions returns only for location permissions on iOS and under certain conditions, see Permissions.LOCATION
-    const { status, permissions } = await Permissions.askAsync(
-      Permissions.LOCATION
-    );
-    if (status === "granted") {
-      return Location.getCurrentPositionAsync({ enableHighAccuracy: true });
-    } else {
-      throw new Error("Location permission not granted");
-    }
-  }
-*/
   const getLocationHandler = async () => {
     const hasPermission = await verifyPermissions();
     if (!hasPermission) {
@@ -85,6 +69,7 @@ const LocationPicker = (props) => {
     }
     setIsFetching(false);
   };
+
   const pickOnMapHandler = () => {
     props.navigation.navigate("Map");
   };
@@ -109,7 +94,7 @@ const LocationPicker = (props) => {
           onPress={getLocationHandler}
         />
         <Button
-          title="Pick on map"
+          title="Pick on Map"
           color={Colors.primary}
           onPress={pickOnMapHandler}
         />
@@ -137,8 +122,3 @@ const styles = StyleSheet.create({
 });
 
 export default LocationPicker;
-
-// keytool -list -v -keystore ~/.android/debug.keystore -alias androiddebugkey -storepass android -keypass android
-
-// AIzaSyDsuShx_qdG-XFpnvwT9V82LFJBYfXkyD0
-// AIzaSyDsuShx_qdG-XFpnvwT9V82LFJBYfXkyD0

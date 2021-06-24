@@ -1,28 +1,29 @@
 import React, { useState } from "react";
-import { View, Text, Button, StyleSheet, Image, Alert } from "react-native";
-import Color from "../constants/Colors";
+import { View, Button, Image, Text, StyleSheet, Alert } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import * as Permissions from "expo-permissions";
+
+import Colors from "../constants/Colors";
 
 const ImgPicker = (props) => {
   const [pickedImage, setPickedImage] = useState();
 
   const verifyPermissions = async () => {
     const result = await Permissions.askAsync(
-      Permissions.CAMERA,
-      Permissions.CAMERA_ROLL
+      Permissions.CAMERA_ROLL,
+      Permissions.CAMERA
     );
-
     if (result.status !== "granted") {
       Alert.alert(
         "Insufficient permissions!",
-        "You neeed to grant camera permissions to use app.",
-        [{ text: "OKAY" }]
+        "You need to grant camera permissions to use this app.",
+        [{ text: "Okay" }]
       );
       return false;
     }
     return true;
   };
+
   const takeImageHandler = async () => {
     const hasPermission = await verifyPermissions();
     if (!hasPermission) {
@@ -35,7 +36,6 @@ const ImgPicker = (props) => {
     });
 
     setPickedImage(image.uri);
-
     props.onImageTaken(image.uri);
   };
 
@@ -43,14 +43,14 @@ const ImgPicker = (props) => {
     <View style={styles.imagePicker}>
       <View style={styles.imagePreview}>
         {!pickedImage ? (
-          <Text>No Image picked yet.</Text>
+          <Text>No image picked yet.</Text>
         ) : (
           <Image style={styles.image} source={{ uri: pickedImage }} />
         )}
       </View>
       <Button
         title="Take Image"
-        color={Color.primary}
+        color={Colors.primary}
         onPress={takeImageHandler}
       />
     </View>
@@ -58,7 +58,10 @@ const ImgPicker = (props) => {
 };
 
 const styles = StyleSheet.create({
-  imagePicker: { alignItems: "center", marginBottom: 15 },
+  imagePicker: {
+    alignItems: "center",
+    marginBottom: 15,
+  },
   imagePreview: {
     width: "100%",
     height: 200,
@@ -75,5 +78,3 @@ const styles = StyleSheet.create({
 });
 
 export default ImgPicker;
-
-//import * as SQLite from 'expo-sqlite';

@@ -21,14 +21,13 @@ export default (state = initialState, action) => {
             )
         ),
       };
-
     case ADD_PLACE:
       const newPlace = new Place(
-        action.placeData.toString(),
+        action.placeData.id.toString(),
         action.placeData.title,
         action.placeData.image,
         action.placeData.address,
-        actoin.placeData.coords.lat,
+        action.placeData.coords.lat,
         action.placeData.coords.lng
       );
       return {

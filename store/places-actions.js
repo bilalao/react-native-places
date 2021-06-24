@@ -20,6 +20,7 @@ export const addPlace = (title, image, location) => {
     if (!resData.results) {
       throw new Error("Something went wrong!");
     }
+
     const address = resData.results[0].formatted_address;
 
     const fileName = image.split("/").pop();
@@ -57,6 +58,7 @@ export const addPlace = (title, image, location) => {
     }
   };
 };
+
 export const loadPlaces = () => {
   return async (dispatch) => {
     try {
